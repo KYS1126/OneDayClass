@@ -1,0 +1,7 @@
+function fn_submit() {
+	var fn = document.frm;
+	
+	
+	
+	
+}

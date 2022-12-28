@@ -10,7 +10,7 @@
 <body>
 	<div class="headerdiv">
 		<header>
-			<a href="index.jsp">One Day Class</a>
+			<a href="index">One Day Class</a>
 		</header>
 		<nav>회원가입</nav>
 	</div>

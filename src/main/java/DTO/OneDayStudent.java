@@ -1,16 +1,23 @@
 package DTO;
 
 public class OneDayStudent {
-	int jumin;
+	int studentNumber;
+	String jumin;
 	String studentName;
-	int phone;
-	int classNumber;
+	String phone;
 	
 	
-	public int getJumin() {
+	
+	public int getStudentNumber() {
+		return studentNumber;
+	}
+	public void setStudentNumber(int studentNumber) {
+		this.studentNumber = studentNumber;
+	}
+	public String getJumin() {
 		return jumin;
 	}
-	public void setJumin(int jumin) {
+	public void setJumin(String jumin) {
 		this.jumin = jumin;
 	}
 	public String getStudentName() {
@@ -19,18 +26,13 @@ public class OneDayStudent {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public int getClassNumber() {
-		return classNumber;
-	}
-	public void setClassNumber(int classNumber) {
-		this.classNumber = classNumber;
-	}
+	
 	
 	
 	

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,38 +10,20 @@
 </head>
 <body>
 	<%@ include file="header.jsp"%>
+	
 	<div class="div_index">
 		<div class="main">
-			<div class="studio_div">
-				<img>
-				<div><a href="#">공방이름</a></div>
-			</div>
-			<div class="studio_div">
-				<img>
-				<div><a href="#">공방이름</a></div>
-			</div>
-		</div>
-				<div class="main">
-			<div class="studio_div">
-				<img>
-				<div><a href="#">공방이름</a></div>
-			</div>
-			<div class="studio_div">
-				<img>
-				<div><a href="#">공방이름</a></div>
-			</div>
-		</div>
-				<div class="main">
-			<div class="studio_div">
-				<img>
-				<div><a href="#">공방이름</a></div>
-			</div>
-			<div class="studio_div">
-				<img>
-				<div><a href="#">공방이름</a></div> 
-			</div>
+			<c:forEach var="list" items="${list}" varStatus="status">
+				<div class="studio_div">
+					<img>
+					<div>
+						<a href="./main?classNumber=${list.classNumber}">${list.className}</a>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
+	
 	<%@ include file="footer.jsp"%>
 </body>
 </html>
