@@ -12,7 +12,7 @@
 		<header>
 			<a href="index">One Day Class</a>
 		</header>
-		<nav>회원가입</nav>
+		<nav><a href="studentadd.jsp">회원가입</a></nav>
 	</div>
 </body>
 </html>

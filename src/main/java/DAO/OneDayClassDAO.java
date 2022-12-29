@@ -79,34 +79,88 @@ public class OneDayClassDAO {
 	
 	}
 	
-	public ArrayList<OneDayStudent> getStudent (HttpServletRequest request) throws Exception {
-		
-		//add input에서 가져온 애
-		
-		String inputJumin = request.getParameter("jumin");
-		String inputStudentName = request.getParameter("studentName");
-
+	//회원가입
+	public void signUp (OneDayStudent s) throws Exception {
 		Connection conn = open();
-		ArrayList<OneDayStudent> studentList = new ArrayList<OneDayStudent>();
+		String sql = "insert into OneDayStudent (STUDENTNUMBER, JUMIN, STUDENTNAME, PHONE) VALUES (STUDENT_SEQ.NEXTVAL,?,?,?)";
 		
-		String sql = "select studentnumber,jumin,studentname,phone from OneDayStudent";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
 		
-		try(conn; pstmt; rs) {
-			while(rs.next()) {
-				OneDayStudent s = new OneDayStudent();
-				s.setStudentNumber(rs.getInt(1));
-				s.setJumin(rs.getString(2));
-				s.setStudentName(rs.getString(3));
-				s.setPhone(rs.getString(4));
-				
-				studentList.add(s);
-				
-			}
-			return studentList;
+		try (conn; pstmt) {
+			pstmt.setString(1, s.getJumin());
+			pstmt.setString(2, s.getStudentName());
+			pstmt.setString(3, s.getPhone());
+			pstmt.executeUpdate();
 		} 
+	}
+	
+	public String juminCheck(OneDayStudent s) throws Exception {
+	int b = 0;
+	Connection conn = open();
+//	String sql = "SELECT COUNT(*) FROM OneDayStudent WHERE JUMIN = ?";
+	String sql = "SELECT jumin FROM OneDayStudent WHERE JUMIN = ?";
+	
+	//쿼리문 준비
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	
+	//?에 값을 넣어주기
+	pstmt.setString(1, s.getJumin());
+	
+	//실행한 쿼리문을 rs객체에 담아준다.
+	ResultSet rs = pstmt.executeQuery();
+	
+	//다음 컬럼이 있느냐 없느냐를 확인해주는 메소드
+	try (conn; pstmt; rs) {	
+		if (rs.next()) {			
+			return "0";
+//			return "중복된 주민등록 번호가 있습니다";  
+		}
+		else {
+			return "1";
+//			return "중복된 주민등록 번호가 없습니다";  
+		}
 		
 	}
+	
+	}
+	
+	
+	public void addDbUp (Reservation r, int result) throws Exception {
+		Connection conn = open();
+		String sql = "insert into reservation (reservationnumber, classnumber, studentnumber) VALUES (reservation_SEQ.nextval,?,?)";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		try (conn; pstmt) {
+			pstmt.setInt(1, r.getClassNumber());
+			pstmt.setInt(2, result);
+			pstmt.executeUpdate();
+		}
+	}
+	
+	public int getStudentNumber (String inputJumin) throws Exception {
+		Connection conn = open();
+		OneDayStudent student = new OneDayStudent();
+		String sql = "select STUDENTNUMBER, JUMIN, STUDENTNAME, PHONE FROM onedaystudent WHERE JUMIN = ?";
+		int result;
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, inputJumin);  //sql문 ? 에 세팅해주기
+		ResultSet rs = pstmt.executeQuery();
+		
+		try(conn; pstmt) {
+			student.setStudentNumber(rs.getInt(1));
+			student.setJumin(rs.getString(2));
+			student.setStudentName(rs.getString(3));
+			student.setPhone(rs.getString(4));
+			
+			result = student.getStudentNumber();
+			return result;
+		}
+		
+	}
+	
+	
+	
 	
 }

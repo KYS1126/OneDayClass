@@ -1,6 +1,8 @@
 package Contoller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +14,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import DAO.*;
 import DTO.OneDayClass;
 import DTO.OneDayStudent;
+import DTO.Reservation;
 
 @WebServlet("/")
 public class OneDayClassController extends HttpServlet {
@@ -50,20 +55,31 @@ public class OneDayClassController extends HttpServlet {
 		String site = null;
 		
 		switch (command) {
-		case "/index" : 
+		case "/index" : //메인화면
 			site = getIndex(request);
 			break;
-		case "/main" :
+		case "/main" : //공방 세부사항 가기
 			site = getMain(request);
 			break;
-		case "/add" :
+		case "/add" : //신청화면 갈때
 			site = getAdd(request);
 			break;
-		case "/ch" :
-			site = getch(request);
+		case "/signup" : //회원가입 하기
+			site = signUp(request, response);
 			break;
+		case "/addup" : //신청하기 누르면 submit실행
+			site = addup(request);
+
 		}
-		getServletContext().getRequestDispatcher("/" + site).forward(request, response);
+		
+		if(site.startsWith("null")) {
+		} else if (site.startsWith("redirect:/")) {
+			String rview = site.substring("redirect:/".length());
+			response.sendRedirect(rview);
+		} else { // forward
+			getServletContext().getRequestDispatcher("/" + site).forward(request, response);			
+		}
+		
 	}
 	
 	public String getIndex (HttpServletRequest request) {
@@ -74,8 +90,6 @@ public class OneDayClassController extends HttpServlet {
 			request.setAttribute("list", list);			
 		} catch (Exception e) {
 			e.printStackTrace();
-			ctx.log("게시판 목록 생성 과정에서 문제 발생!!");
-			request.setAttribute("error", "게시판 목록이 정상적으로 처리되지 않았습니다!!");
 		}
 		return "index.jsp";
 		
@@ -109,34 +123,42 @@ public class OneDayClassController extends HttpServlet {
 	}
 
 	
-	//하나씩 비교 해주는 애
-	public String getch (HttpServletRequest request) {
-		ArrayList<OneDayStudent> studentList = new ArrayList<OneDayStudent>();
-		
-		//add input에서 가져온 값.
-		String inputJumin = request.getParameter("jumin");
-		String inputStudentName = request.getParameter("studentName");
+	public String signUp (HttpServletRequest request, HttpServletResponse response) {
+		OneDayStudent s = new OneDayStudent();
 		
 		try {
-			studentList = dao.getStudent(request);
-			//학생 객체리스트 보내주기.
-			request.setAttribute("studentList", studentList);
+ 			BeanUtils.populate(s, request.getParameterMap());
 			
-			for (OneDayStudent s : studentList) {
-				if (s.getJumin().equals(inputJumin) && s.getStudentName().equals(inputStudentName)) {
-					return 1;
-				}
+			if (dao.juminCheck(s).equals("0")) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");					
+				out.println("alert('중복된 주민 등록 번호입니다.'); location.href= '" + request.getContextPath()+ "/studentadd.jsp" + "' ;");
+				out.println("</script>");
+				out.flush(); // 한꺼번에 내보내기
+			}else {
+				dao.signUp(s);
+				return "index.jsp";
 			}
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return 0;
-	
+		return "null";
 	}
 	
-	
+	public String addup (HttpServletRequest request) {
+		Reservation r = new Reservation();
+		String inputJumin = request.getParameter("jumin");
+		
+		try {
+ 			BeanUtils.populate(r, request.getParameterMap());
+ 			int result = dao.getStudentNumber(inputJumin); //주민등록 번호로 찾아주기 //해당 번호가 리턴됨.
+			dao.addDbUp(r,result);  //db에 올려주기
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "index.jsp";
+	}
 	
 	
 }
