@@ -32,6 +32,7 @@ public class OneDayClassController extends HttpServlet {
 		super.init(config);
 		dao = new OneDayClassDAO();
 		ctx = getServletContext();
+		
 	}
 
 	public OneDayClassController() {
@@ -69,6 +70,8 @@ public class OneDayClassController extends HttpServlet {
 			break;
 		case "/addup" : //신청하기 누르면 submit실행
 			site = addup(request);
+		case "/personnel" :    //인원현황 보기
+			site = getPresonnel(request);
 
 		}
 		
@@ -107,6 +110,27 @@ public class OneDayClassController extends HttpServlet {
 		}
 		return "main.jsp";
 	}
+	
+	
+	public String getPresonnel (HttpServletRequest request) {
+		int classNumber = Integer.parseInt(request.getParameter("classNumber"));
+		
+		OneDayClass d;
+		ArrayList<OneDayStudent> s;
+		
+		try {
+			//해당 스튜던트 객체
+			d = dao.getView(classNumber);  //해당 클래스 리턴
+			request.setAttribute("oneClass", d);
+			s = dao.getPersonnelList(classNumber); //해당 스튜던트 리턴
+			request.setAttribute("oneClassStudent", s);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "personnel.jsp";
+	
+}
 	
 	public String getAdd (HttpServletRequest request) {
 		int classNumber = Integer.parseInt(request.getParameter("classNumber"));
@@ -159,6 +183,8 @@ public class OneDayClassController extends HttpServlet {
 		}
 		return "index.jsp";
 	}
+	
+
 	
 	
 }

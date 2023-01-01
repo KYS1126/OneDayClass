@@ -79,6 +79,34 @@ public class OneDayClassDAO {
 	
 	}
 	
+	//클래스 넘버를 받아서 예약디비에 조회 후에 스튜던트 객체를 리턴해줘야함
+	public ArrayList<OneDayStudent> getPersonnelList(int classNumber) throws Exception {
+		Connection conn = open();
+		
+		ArrayList<OneDayStudent> o = new ArrayList<OneDayStudent>();
+		String sql = "select T1.studentnumber, T1.jumin, T1.studentname, T1.phone from onedaystudent T1 join reservation T2 on (t1.studentnumber = t2.studentnumber) where t2.classnumber = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, classNumber);
+		ResultSet rs = pstmt.executeQuery();
+//		rs.next();
+		
+		try(conn; pstmt; rs) {
+			while (rs.next()) {
+				OneDayStudent s = new OneDayStudent();
+				s.setStudentNumber(rs.getInt(1));
+				s.setJumin(rs.getString(2));
+				s.setStudentName(rs.getString(3));
+				s.setPhone(rs.getString(4));
+				
+				o.add(s);
+			}
+			
+			return o;
+		}
+	
+	}
+
+	
 	//회원가입
 	public void signUp (OneDayStudent s) throws Exception {
 		Connection conn = open();
@@ -125,6 +153,8 @@ public class OneDayClassDAO {
 	}
 	
 	
+	
+	//db에 입력해주기
 	public void addDbUp (Reservation r, int result) throws Exception {
 		Connection conn = open();
 		String sql = "insert into reservation (reservationnumber, classnumber, studentnumber) VALUES (reservation_SEQ.nextval,?,?)";
@@ -138,23 +168,26 @@ public class OneDayClassDAO {
 		}
 	}
 	
+	//회원번호 찾기
 	public int getStudentNumber (String inputJumin) throws Exception {
 		Connection conn = open();
 		OneDayStudent student = new OneDayStudent();
 		String sql = "select STUDENTNUMBER, JUMIN, STUDENTNAME, PHONE FROM onedaystudent WHERE JUMIN = ?";
-		int result;
+		int result = 0;
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, inputJumin);  //sql문 ? 에 세팅해주기
 		ResultSet rs = pstmt.executeQuery();
 		
 		try(conn; pstmt) {
-			student.setStudentNumber(rs.getInt(1));
-			student.setJumin(rs.getString(2));
-			student.setStudentName(rs.getString(3));
-			student.setPhone(rs.getString(4));
-			
-			result = student.getStudentNumber();
+			while (rs.next()) {
+				student.setStudentNumber(rs.getInt(1));
+				student.setJumin(rs.getString(2));
+				student.setStudentName(rs.getString(3));
+				student.setPhone(rs.getString(4));
+				
+				result = student.getStudentNumber();
+			}
 			return result;
 		}
 		

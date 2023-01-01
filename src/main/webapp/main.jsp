@@ -18,7 +18,7 @@
 		</div>
 		<div class="main_list">
 			<div>가격:${oneClass.price}, 소요시간:${oneClass.time}</div>
-			<div><a href="personnel">수강인원현황</a></div>
+			<div><a href="./personnel?classNumber=${oneClass.classNumber}">수강인원현황</a></div>
 		</div>
 		<div class="main_submit">
 			<div><a href="./add?classNumber=${oneClass.classNumber}">클래스 신청하기</a></div>

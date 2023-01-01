@@ -15,7 +15,9 @@
 		<div class="main">
 			<c:forEach var="list" items="${list}" varStatus="status">
 				<div class="studio_div">
-					<img>
+				<a href="./main?classNumber=${list.classNumber}">
+					<img src="./${list.classNumber}.jpg">				
+				</a>
 					<div>
 						<a href="./main?classNumber=${list.classNumber}">${list.className}</a>
 					</div>
