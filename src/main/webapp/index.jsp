@@ -10,22 +10,23 @@
 </head>
 <body>
 	<%@ include file="header.jsp"%>
-	
+
 	<div class="div_index">
 		<div class="main">
 			<c:forEach var="list" items="${list}" varStatus="status">
 				<div class="studio_div">
-				<a href="./main?classNumber=${list.classNumber}">
-					<img src="./${list.classNumber}.jpg">				
-				</a>
 					<div>
+						<a href="./main?classNumber=${list.classNumber}"> <img  class = "index_img" src="./${list.classNumber}.jpg">
+						</a>
+					</div>
+					<div class="index_name">
 						<a href="./main?classNumber=${list.classNumber}">${list.className}</a>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
-	
+
 	<%@ include file="footer.jsp"%>
 </body>
 </html>

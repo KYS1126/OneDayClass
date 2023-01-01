@@ -79,6 +79,19 @@ public class OneDayClassDAO {
 	
 	}
 	
+	public void deletDb (String studentNumber ,String classNumber) throws Exception {
+		Connection conn = open();
+		
+		String sql = "delete from reservation where studentnumber = ? and classnumber = ?;";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		try (conn; pstmt) {
+			pstmt.setString(1, studentNumber);
+			pstmt.setString(2, classNumber);
+		}
+		
+	}
+	
 	//클래스 넘버를 받아서 예약디비에 조회 후에 스튜던트 객체를 리턴해줘야함
 	public ArrayList<OneDayStudent> getPersonnelList(int classNumber) throws Exception {
 		Connection conn = open();

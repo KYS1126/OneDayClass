@@ -2,7 +2,10 @@ package Contoller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLEncoder;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +75,8 @@ public class OneDayClassController extends HttpServlet {
 			site = addup(request);
 		case "/personnel" :    //인원현황 보기
 			site = getPresonnel(request);
-
+		case "/delete" :
+			site = deletePresonnel(request);
 		}
 		
 		if(site.startsWith("null")) {
@@ -121,10 +125,9 @@ public class OneDayClassController extends HttpServlet {
 		try {
 			//해당 스튜던트 객체
 			d = dao.getView(classNumber);  //해당 클래스 리턴
-			request.setAttribute("oneClass", d);
 			s = dao.getPersonnelList(classNumber); //해당 스튜던트 리턴
 			request.setAttribute("oneClassStudent", s);
-			
+			request.setAttribute("oneClass", d);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -183,6 +186,20 @@ public class OneDayClassController extends HttpServlet {
 		}
 		return "index.jsp";
 	}
+	
+	public String deletePresonnel(HttpServletRequest request) {
+		String s = request.getParameter("studentNumber");
+		String c = request.getParameter("classNumber");
+		
+		try {
+			dao.deletDb(s, c);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		return "personnel.jsp";
+		
+	}
+	
 	
 
 	
