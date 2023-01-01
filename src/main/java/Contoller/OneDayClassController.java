@@ -188,11 +188,11 @@ public class OneDayClassController extends HttpServlet {
 	}
 	
 	public String deletePresonnel(HttpServletRequest request) {
-		String s = request.getParameter("studentNumber");
-		String c = request.getParameter("classNumber");
+		Reservation b = new Reservation();
 		
 		try {
-			dao.deletDb(s, c);
+			BeanUtils.populate(b, request.getParameterMap());
+			dao.deletDb(b);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

@@ -79,15 +79,16 @@ public class OneDayClassDAO {
 	
 	}
 	
-	public void deletDb (String studentNumber ,String classNumber) throws Exception {
+	public void deletDb (Reservation b) throws Exception {
 		Connection conn = open();
 		
-		String sql = "delete from reservation where studentnumber = ? and classnumber = ?;";
+		String sql = "delete from reservation where studentnumber = ? and classnumber = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		try (conn; pstmt) {
-			pstmt.setString(1, studentNumber);
-			pstmt.setString(2, classNumber);
+			pstmt.setInt(1, b.getStudentNumber());
+			pstmt.setInt(2, b.getClassNumber());
+			pstmt.executeUpdate();
 		}
 		
 	}
