@@ -6,13 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<div class="main_name">${oneClass.className} 인원현황</div>
-	<div class="main_img">공방대표이미지</div>
-	<div>
-		<div>정원 ${oneClass.maxStudent} 명</div>
+	<div class="ps_name">${oneClass.className} 인원현황</div>
+	<div class="main_imgg"><img class="main_img_img" src="./${oneClass.classNumber}-${oneClass.classNumber}.jpg"></div>
+	<div class="ps_main">
+		<div class="ps_student">정원 ${oneClass.maxStudent} 명</div>
 		<table>
 			<tr>
 				<th>회원넘버</th>
@@ -28,10 +29,10 @@
 					<td>${studentList.studentName}</td>
 					<td>${studentList.phone}</td>
 					<td>		
-					<form name="frmInput" method="get" action="delete">
+					<form name="fo" action="delete">
 						<input type="hidden" name="studentNumber" value="${studentList.studentNumber}">
 						<input type="hidden" name="classNumber" value="${oneClass.classNumber}">
-						<input type="submit" value="삭제하기">
+						<button class="btn" type="submit" >삭제하기</button>
 					</form>
 					</td>
 				</tr>
@@ -40,7 +41,7 @@
 	</div>
 
 
-
+<script type="text/javascript" src="./script.js"></script>
 	<%@include file="footer.jsp"%>
 </body>
 </html>

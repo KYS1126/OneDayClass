@@ -55,10 +55,13 @@ public class OneDayClassController extends HttpServlet {
 	protected void dopro (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String context = request.getContextPath();
 		String command = request.getServletPath();
-		System.out.println(context + "/" + command);
+		System.out.println(context + command);
 		String site = null;
 		
 		switch (command) {
+		case "" :
+			site = getIndex(request);
+			break;
 		case "/index" : //메인화면
 			site = getIndex(request);
 			break;
@@ -72,14 +75,24 @@ public class OneDayClassController extends HttpServlet {
 			site = signUp(request, response);
 			break;
 		case "/addup" : //신청하기 누르면 submit실행
-			site = addup(request);
+			site = addup(request,response);
+			break;
 		case "/personnel" :    //인원현황 보기
 			site = getPresonnel(request);
+			break;
 		case "/delete" :
-			site = deletePresonnel(request);
+			site = deletePresonnel(request,response);
+			break;
+		case "/classupdate" :
+			site = update(request);
+			break;
+		case "/update" :
+			site = dbupdate(request,response);
+			break;
 		}
 		
 		if(site.startsWith("null")) {
+			
 		} else if (site.startsWith("redirect:/")) {
 			String rview = site.substring("redirect:/".length());
 			response.sendRedirect(rview);
@@ -164,6 +177,12 @@ public class OneDayClassController extends HttpServlet {
 				out.println("</script>");
 				out.flush(); // 한꺼번에 내보내기
 			}else {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>");					
+				out.println("alert('회원가입이 성공적으로 완료되었습니다.'); location.href= '" + request.getContextPath()+ "/studentadd.jsp" + "' ;");
+				out.println("</script>");
+				out.flush(); // 한꺼번에 내보내기
 				dao.signUp(s);
 				return "index.jsp";
 			}
@@ -173,36 +192,81 @@ public class OneDayClassController extends HttpServlet {
 		return "null";
 	}
 	
-	public String addup (HttpServletRequest request) {
+	public String addup (HttpServletRequest request,HttpServletResponse response) {
 		Reservation r = new Reservation();
 		String inputJumin = request.getParameter("jumin");
+		response.setContentType("text/html; charset=UTF-8");
+		String context = request.getContextPath();
 		
 		try {
+			PrintWriter out=response.getWriter();
  			BeanUtils.populate(r, request.getParameterMap());
  			int result = dao.getStudentNumber(inputJumin); //주민등록 번호로 찾아주기 //해당 번호가 리턴됨.
 			dao.addDbUp(r,result);  //db에 올려주기
+			out.println("<script>");
+			out.println("alert('클래스 신청이 완료되었습니다.'); location.href='"+context+"'+'/index'; ");
+			out.println("</script>");
+			out.flush();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "index.jsp";
 	}
 	
-	public String deletePresonnel(HttpServletRequest request) {
+	public String deletePresonnel(HttpServletRequest request,HttpServletResponse response) {
 		Reservation b = new Reservation();
+		response.setContentType("text/html; charset=UTF-8");
+		String context = request.getContextPath();
 		
 		try {
+			PrintWriter out=response.getWriter();
 			BeanUtils.populate(b, request.getParameterMap());
 			dao.deletDb(b);
+			out.println("<script>");
+			out.println("alert('수강 신청 삭제가 완료되었습니다.'); location.href='"+context+"'+'/index'; ");
+			out.println("</script>");
+			out.flush();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		return "personnel.jsp";
+		return "null";
 		
 	}
 	
+	public String update(HttpServletRequest request) {
+		int classNumber = Integer.parseInt(request.getParameter("classNumber"));
 	
+		OneDayClass d;
+		
+		try {
+			d = dao.getView(classNumber);
+			request.setAttribute("oneClass", d);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "classupdate.jsp";
+	}
 
-	
+	public String dbupdate(HttpServletRequest request,HttpServletResponse response) {
+		OneDayClass s = new OneDayClass();
+		response.setContentType("text/html; charset=UTF-8");
+		String context = request.getContextPath();
+		
+		try {
+			PrintWriter out=response.getWriter();
+			BeanUtils.populate(s, request.getParameterMap());
+			dao.updateClass(s);
+			out.println("<script>");
+			out.println("alert('클래스 정보가 성공적으로 수정 되었습니다.'); location.href='"+context+"'+'/index'; ");
+			out.println("</script>");
+			out.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "null";
+	}
 	
 }
 

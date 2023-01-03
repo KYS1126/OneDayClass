@@ -207,6 +207,25 @@ public class OneDayClassDAO {
 		
 	}
 	
+	public void updateClass(OneDayClass s) throws Exception {
+		Connection conn = open();
+		
+		String sql = "UPDATE ONEDAYCLASS SET CLASSNAME = ?, PRICE = ?, DAY = ?, TIME = ?, MAXSTUDENT = ?, PLACE = ? WHERE CLASSNUMBER = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql); 
+		
+		try (conn; pstmt) {
+			pstmt.setString(1, s.getClassName());
+			pstmt.setInt(2, s.getPrice());
+			pstmt.setDate(3, s.getDay());
+			pstmt.setString(4, s.getTime());
+			pstmt.setInt(5, s.getMaxStudent());
+			pstmt.setString(6, s.getPlace());
+			pstmt.setInt(7, s.getClassNumber());
+			
+			pstmt.executeUpdate();
+			
+		}
+	}
 	
 	
 	

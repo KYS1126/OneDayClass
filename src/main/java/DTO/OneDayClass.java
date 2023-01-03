@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class OneDayClass {
 	int classNumber;
-	String ClassName;
+	String className;
 	int price;
 	Date day;
 	String time;
@@ -18,10 +18,10 @@ public class OneDayClass {
 		this.classNumber = classNumber;
 	}
 	public String getClassName() {
-		return ClassName;
+		return className;
 	}
 	public void setClassName(String className) {
-		ClassName = className;
+		this.className = className;
 	}
 	public int getPrice() {
 		return price;

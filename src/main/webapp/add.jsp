@@ -10,21 +10,21 @@
 <body>
 	<%@include file="header.jsp"%>
 	<form name="frm" action="addup">
-		<table>
-			<tr>
-				<th>클래스 이름:${oneClass.className}${oneClass.classNumber}</th>
-				<td><input type="hidden" name=classNumber value="${oneClass.classNumber}"></td>
-			</tr>
-			<tr>
-				<th>주민등록번호</th>
-				<td><input type="text" name="jumin"></td>
-			</tr>
-			<tr>
-				<td>
-					<button class="btn" type="button"
-						onclick="fn_add();">신청하기</button>
-				</td>
-			</tr>
+		<table class="add_table">
+			<div class="add_div">
+				<div class="add_diva">클래스 이름:${oneClass.className}${oneClass.classNumber}</div>
+				<div class="add_divb">
+					<input type="hidden" name=classNumber
+						value="${oneClass.classNumber}">
+				</div>
+				<div class="add_divc">
+					주민등록번호<input type="text" name="jumin">
+				</div>
+				<div class="add_divd">
+					<button class="btn" type="button" onclick="fn_add();">신청하기</button>
+				</div>
+			</div>
+
 		</table>
 	</form>
 
