@@ -29,20 +29,43 @@
 					<td>${studentList.studentName}</td>
 					<td>${studentList.phone}</td>
 					<td>		
-					<form name="fo" action="delete">
-						<input type="hidden" name="studentNumber" value="${studentList.studentNumber}">
+					<form name="${studentList.studentNumber}" action="delete" id="${studentList.studentNumber}" >
+						<input id="stn" type="hidden" name="studentNumber" value="${studentList.studentNumber}">
 						<input type="hidden" name="classNumber" value="${oneClass.classNumber}">
-						<button class="btn" type="button" onclick="conf()" >삭제하기</button>
-						<!-- <button class="btn" type="submit" >삭제하기</button> -->
+						<!-- <button class="btn" type="button" onclick="conf()" >삭제하기</button> -->
+						<button class="btn" type="submit" >삭제하기</button>
 					</form>
 					</td>
 				</tr>
 			</c:forEach>
 		</table>
+		
 	</div>
 
 
-<script type="text/javascript" src="./script.js"></script>
+<!-- <script type="text/javascript" src="./script.js"></script> -->
+
+<!-- <script >
+var text = '${oneClassStudent}';
+ console.log("text: ", text);
+
+function conf() {
+var sn = document.getElementById('stn').value;
+	
+	if (confirm("정말 삭제하시겠습니까?")) {
+		
+		
+	console.log("sn: ",sn);
+	var a = document.getElementById(sn);
+	console.log("a: ", a);
+	//document.getElementById("formid"+sn).submit();
+	
+	
+} else {
+return;
+}
+}
+</script> -->
 	<%@include file="footer.jsp"%>
 </body>
 </html>

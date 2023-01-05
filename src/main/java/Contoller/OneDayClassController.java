@@ -199,19 +199,30 @@ public class OneDayClassController extends HttpServlet {
 		String context = request.getContextPath();
 		
 		try {
+			
+
 			PrintWriter out=response.getWriter();
  			BeanUtils.populate(r, request.getParameterMap());
  			int result = dao.getStudentNumber(inputJumin); //주민등록 번호로 찾아주기 //해당 번호가 리턴됨.
-			dao.addDbUp(r,result);  //db에 올려주기
-			out.println("<script>");
-			out.println("alert('클래스 신청이 완료되었습니다.'); location.href='"+context+"'+'/index'; ");
-			out.println("</script>");
-			out.flush();
+			
+			if (result == 0) {
+				out.println("<script>");
+				out.println("alert('주민등록 번호를 잘못 입력하셨습니다.'); location.href='"+context+"'+'/index'; ");
+				out.println("</script>");
+				out.flush();
+			} else {
+	 			dao.addDbUp(r,result);  //db에 올려주기
+				System.out.println(r+","+result);
+				out.println("<script>");
+				out.println("alert('클래스 신청이 완료되었습니다.'); location.href='"+context+"'+'/index'; ");
+				out.println("</script>");
+				out.flush();	
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "index.jsp";
+		return "null";
 	}
 	
 	public String deletePresonnel(HttpServletRequest request,HttpServletResponse response) {
@@ -231,7 +242,6 @@ public class OneDayClassController extends HttpServlet {
 			e1.printStackTrace();
 		}
 		return "null";
-		
 	}
 	
 	public String update(HttpServletRequest request) {
@@ -264,7 +274,6 @@ public class OneDayClassController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return "null";
 	}
 	

@@ -182,7 +182,7 @@ public class OneDayClassDAO {
 		}
 	}
 	
-	//회원번호 찾기
+	//회원번호 찾기 클래스 신청할때
 	public int getStudentNumber (String inputJumin) throws Exception {
 		Connection conn = open();
 		OneDayStudent student = new OneDayStudent();
@@ -202,6 +202,8 @@ public class OneDayClassDAO {
 				
 				result = student.getStudentNumber();
 			}
+			System.out.println("result : "+result);
+			
 			return result;
 		}
 		
