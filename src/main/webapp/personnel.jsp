@@ -32,7 +32,8 @@
 					<form name="fo" action="delete">
 						<input type="hidden" name="studentNumber" value="${studentList.studentNumber}">
 						<input type="hidden" name="classNumber" value="${oneClass.classNumber}">
-						<button class="btn" type="submit" >삭제하기</button>
+						<button class="btn" type="button" onclick="conf()" >삭제하기</button>
+						<!-- <button class="btn" type="submit" >삭제하기</button> -->
 					</form>
 					</td>
 				</tr>

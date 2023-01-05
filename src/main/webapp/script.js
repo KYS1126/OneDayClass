@@ -60,13 +60,12 @@ function classup() {
 
 }
 
-// function conf() {
-//	var f = document.fo;
-//	consol.log();
-
-//	if (confirm("정말 삭제하시겠습니까?")) {
-//		f.submit();		
-//	} else {
-//		return;
-//	}
-//}
+ function conf() {
+	var f = document.fo;
+	
+	if (confirm("정말 삭제하시겠습니까?")) {
+		f.submit();		
+	} else {
+	return;
+	}
+}
