@@ -10,17 +10,21 @@
 </head>
 <body>
 	<%@include file="header.jsp"%>
-	<div class="ps_name">${oneClass.className} 인원현황</div>
-	<div class="main_imgg"><img class="main_img_img" src="./${oneClass.classNumber}-${oneClass.classNumber}.jpg"></div>
+	<div class="ps_name">${oneClass.className}인원현황</div>
+	<div class="main_imgg">
+		<img class="main_img_img"
+			src="./${oneClass.classNumber}-${oneClass.classNumber}.jpg">
+	</div>
 	<div class="ps_main">
 		<div class="ps_student">정원 ${oneClass.maxStudent} 명</div>
-		<table>
+		<table class="ps_table">
 			<tr>
 				<th>회원넘버</th>
 				<th>주민등록번호 앞자리</th>
 				<th>이름</th>
 				<th>전화번호</th>
 			</tr>
+
 			<c:forEach var="studentList" items="${oneClassStudent}"
 				varStatus="status">
 				<tr>
@@ -28,44 +32,26 @@
 					<td>${studentList.jumin}</td>
 					<td>${studentList.studentName}</td>
 					<td>${studentList.phone}</td>
-					<td>		
-					<form name="${studentList.studentNumber}" action="delete" id="${studentList.studentNumber}" >
-						<input id="stn" type="hidden" name="studentNumber" value="${studentList.studentNumber}">
-						<input type="hidden" name="classNumber" value="${oneClass.classNumber}">
-						<!-- <button class="btn" type="button" onclick="conf()" >삭제하기</button> -->
-						<button class="btn" type="submit" >삭제하기</button>
-					</form>
+					<td>
+						<button class="pebtn" type="button"
+							onclick="conf(${studentList.resv_no})">삭제하기</button>
 					</td>
 				</tr>
 			</c:forEach>
+			<form name="frm" action="delete">
+				<input type="hidden" id="resv_no" name="reservationNumber" value="0">
+				<input type="hidden" id="class_no" name="classNumber" value="${oneClass.classNumber}">
+			</form>
 		</table>
-		
 	</div>
-
-
-<!-- <script type="text/javascript" src="./script.js"></script> -->
-
-<!-- <script >
-var text = '${oneClassStudent}';
- console.log("text: ", text);
-
-function conf() {
-var sn = document.getElementById('stn').value;
-	
-	if (confirm("정말 삭제하시겠습니까?")) {
-		
-		
-	console.log("sn: ",sn);
-	var a = document.getElementById(sn);
-	console.log("a: ", a);
-	//document.getElementById("formid"+sn).submit();
-	
-	
-} else {
-return;
-}
-}
-</script> -->
+	<script>
+		function conf(val){
+			if (confirm("정말 삭제하시겠습니까?")) {
+				$('#resv_no').val(val)	
+				$('[name=frm]').submit();
+			} 
+		} 
+</script>
 	<%@include file="footer.jsp"%>
 </body>
 </html>

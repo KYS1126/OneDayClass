@@ -5,9 +5,16 @@ public class OneDayStudent {
 	String jumin;
 	String studentName;
 	String phone;
+	String resv_no;
 	
 	
 	
+	public String getResv_no() {
+		return resv_no;
+	}
+	public void setResv_no(String resv_no) {
+		this.resv_no = resv_no;
+	}
 	public int getStudentNumber() {
 		return studentNumber;
 	}

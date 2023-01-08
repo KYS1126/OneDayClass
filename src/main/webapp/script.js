@@ -1,8 +1,19 @@
+const autoHyphen2 = (target) => {
+	target.value = target.value
+		.replace(/[^0-9]/g, '')
+		.replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
+
 function fn_submit() {
 	var f = document.frm; //form태그 전체를 가르킨다
-
+	var juminRule = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
 	if (f.jumin.value == '') {
 		alert("주민등록번호를 입력해주십시오.");
+		return false;
+	}
+
+	if (!juminRule.test(f.jumin.value)) {
+		alert("주민등록번호 형식에 맞게 입력하세요");
 		return false;
 	}
 
@@ -55,7 +66,7 @@ function classup() {
 		alert("주소를 입력해주십시오.");
 		return false;
 	}
-	
+
 	f.submit();
 
 }

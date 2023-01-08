@@ -11,11 +11,15 @@ a {
 }
 
 .main {
-	border: 1px solid #ffa998;
 	margin: 0 auto;
 	width: 900px;
-	display: flex;
-	flex-wrap: wrap;
+	height: auto;
+}
+
+.main > div {
+	border: 1px solid #ffa998;
+	float: left; 
+	width:49%;
 }
 
 .studio_div {
@@ -46,6 +50,7 @@ nav {
 	margin: 0 auto;
 	width: 900px;
 	font-size: 1.3rem;
+	padding: 20px;
 }
 
 footer {
@@ -54,6 +59,8 @@ footer {
 	padding: 20px;
 	background: #ffa998;
 	margin-top: 20px;
+	display: inline-block;
+	width: 100%;
 }
 
 .main_div {
@@ -225,9 +232,23 @@ footer {
 }
 
 .studentadd_btn {
-	text-align: center;
+	border: 1px solid black;
+	font-weight: bolder;
+	padding: 10px;
+	background: #ffa998;
 	margin: 0 auto;
-	font-size: 1.2rem;
+	text-align: center;
+	width: 80px;
+	margin-top: 20px;
+}
+
+
+.btnadd {
+	border: none;
+	border: none;
+    background: none;
+    font-weight: bolder;
+    font-size: 1.1rem;
 }
 
 input {
@@ -257,4 +278,27 @@ input {
 .sta{
 	font-weight: bolder;
 	font-size: 1.5rem;
+}
+
+.addup {
+	border: 1px solid black;
+	font-weight: bolder;
+	padding: 10px;
+	background: #ffa998;
+}
+
+.pebtn {
+	border: 1px solid black;
+    padding: 10px;
+    font-size: 1.05rem;
+    background: #ffa998;
+    font-weight: bolder;
+}
+
+.ps_table {
+	width: 100%;
+}
+
+button {
+	cursor: pointer;
 }

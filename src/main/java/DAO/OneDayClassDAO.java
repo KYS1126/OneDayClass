@@ -82,23 +82,23 @@ public class OneDayClassDAO {
 	public void deletDb (Reservation b) throws Exception {
 		Connection conn = open();
 		
-		String sql = "delete from reservation where studentnumber = ? and classnumber = ?";
+		String sql = "delete from reservation where reservationnumber = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		try (conn; pstmt) {
-			pstmt.setInt(1, b.getStudentNumber());
-			pstmt.setInt(2, b.getClassNumber());
+			pstmt.setInt(1, b.getReservationNumber());
 			pstmt.executeUpdate();
 		}
 		
 	}
+	
 	
 	//클래스 넘버를 받아서 예약디비에 조회 후에 스튜던트 객체를 리턴해줘야함
 	public ArrayList<OneDayStudent> getPersonnelList(int classNumber) throws Exception {
 		Connection conn = open();
 		
 		ArrayList<OneDayStudent> o = new ArrayList<OneDayStudent>();
-		String sql = "select T1.studentnumber, T1.jumin, T1.studentname, T1.phone from onedaystudent T1 join reservation T2 on (t1.studentnumber = t2.studentnumber) where t2.classnumber = ?";
+		String sql = "select T1.studentnumber, T1.jumin, T1.studentname, T1.phone, t2.reservationnumber from onedaystudent T1 join reservation T2 on (t1.studentnumber = t2.studentnumber) where t2.classnumber = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, classNumber);
 		ResultSet rs = pstmt.executeQuery();
@@ -111,6 +111,7 @@ public class OneDayClassDAO {
 				s.setJumin(rs.getString(2));
 				s.setStudentName(rs.getString(3));
 				s.setPhone(rs.getString(4));
+				s.setResv_no(rs.getString(5));
 				
 				o.add(s);
 			}

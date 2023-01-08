@@ -18,10 +18,10 @@
 						value="${oneClass.classNumber}">
 				</div>
 				<div class="add_divc">
-					주민등록번호<input type="text" name="jumin">
+					주민등록번호<input type="text" name="jumin" placeholder="ex) 971126-1111111">
 				</div>
-				<div class="add_divd">
-					<button class="btn" type="button" onclick="fn_add();">신청하기</button>
+				<div class="studentadd_btn">
+					<button class="btnadd" type="button" onclick="fn_add();">신청하기</button>
 				</div>
 			</div>
 
