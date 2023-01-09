@@ -114,10 +114,13 @@ footer {
 }
 
 .index_name {
-	border: 1px solid black;
+	border: 1px solid #ffc397;
 	width: 300px;
 	margin: 0 auto;
 	background-color: #ffc397;
+}
+.index_name:hover {
+	transform: scale(0.9);
 }
 
 .index_img {
