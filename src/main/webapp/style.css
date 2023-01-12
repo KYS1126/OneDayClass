@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 * {
 	padding: 0;
 	margin: 0;
@@ -304,4 +305,8 @@ input {
 
 button {
 	cursor: pointer;
+}
+
+.main_sub_div {
+	background-color: #FFA9B5;
 }

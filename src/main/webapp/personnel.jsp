@@ -47,8 +47,9 @@
 	<script>
 		function conf(val){
 			if (confirm("정말 삭제하시겠습니까?")) {
-				$('#resv_no').val(val)	
+				$('#resv_no').val(val);	
 				$('[name=frm]').submit();
+				
 			} 
 		} 
 </script>

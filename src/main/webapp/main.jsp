@@ -20,7 +20,7 @@
 		<div class="main_list">
 			<div>가격 : ${oneClass.price}원 </div>
 			<div>소요시간:${oneClass.time}</div>
-			<div><a href="./personnel?classNumber=${oneClass.classNumber}">수강인원현황</a></div>
+			<div><a class="main_sub_div" href="./personnel?classNumber=${oneClass.classNumber}">수강인원현황 조회</a></div>
 		</div>
 		<div class="main_up"><a class="main_aa" href="./classupdate?classNumber=${oneClass.classNumber}">클래스 정보 수정하기</a></div>
 		<div class="main_submit">
